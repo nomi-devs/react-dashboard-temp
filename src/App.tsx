@@ -2,10 +2,12 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { useSelector } from 'react-redux'
 
 function App() {
   const [count, setCount] = useState(0)
-
+  const state = useSelector((state: any) => state)
+console.log('Redux state:', state)
   return (
     <>
       <div>
@@ -17,7 +19,7 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
-      <div className="card">
+      <div className="card bg-blue-600">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
