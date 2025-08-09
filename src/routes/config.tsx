@@ -1,11 +1,14 @@
+// /routers/config.tsx
 import type { ReactElement } from "react";
 
 // Pages
 import Login from "../pages/auth/Login";
+import HomePage from "@/pages/HomePage";
 import Register from "../pages/auth/Register";
-import ForgotPassword from "../pages/auth/ForgotPassword";
-import Dashboard from "../pages/Dashboard/Dashboard";
+import SettingsPage from "@/pages/SettingsPage";
 import Contact from "../pages/Contact/Contact";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import ForgotPassword from "../pages/auth/ForgotPassword";
 
 export interface AppRoute {
     path: string;
@@ -33,6 +36,16 @@ export const routes: AppRoute[] = [
     {
         path: "/dashboard",
         element: <Dashboard />,
+        protected: true,
+    },
+    {
+        path: "/Home",
+        element: <HomePage />,
+        protected: true,
+    },
+    {
+        path: "/settings",
+        element: <SettingsPage />,
         protected: true,
     },
     {

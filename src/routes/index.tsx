@@ -1,3 +1,5 @@
+// /routers/index.tsx
+
 import { Routes, Route, Navigate } from "react-router-dom";
 import { routes } from "./config";
 import ProtectedRoute from "./ProtectedRoute";

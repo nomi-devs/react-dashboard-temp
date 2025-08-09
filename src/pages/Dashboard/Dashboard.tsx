@@ -1,10 +1,13 @@
- 
-function Dashboard() {
+
+// src/pages/Dashboard.tsx
+import DashboardLayout from "@/components/layout/DashboardLayout";
+
+export default function Dashboard() {
+  console.log("Dashboard component loaded");
   return (
-    <div className="flex items-center justify-center h-screen">
-    <h1 className="text-2xl font-bold">Dashboard Page</h1>
-  </div>
-  )
+    <DashboardLayout>
+      <h1 className="text-2xl font-bold">Dashboard </h1>
+    </DashboardLayout>
+  );
 }
 
-export default Dashboard
