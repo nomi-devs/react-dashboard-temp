@@ -1,5 +1,6 @@
+// tailwind.config.js
 const { COLORS } = require("./src/constants");
-
+ 
 module.exports = {
   darkMode: "class",
   theme: {
@@ -7,6 +8,7 @@ module.exports = {
       colors: {
         primary: COLORS.primary,
         secondary: COLORS.secondary,
+        background: COLORS.background,
       },
     },
   },

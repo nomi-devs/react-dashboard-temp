@@ -1,5 +1,4 @@
-
-
+// TopBanner.tsx
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export default function TopBanner() {

@@ -1,7 +1,9 @@
-// components/form/DynamicForm.tsx
+// src/components/form/DynamicForm.tsx
+import { useState } from "react";
 import type { z } from "zod";
 import type { ZodTypeAny } from "zod";
 import { useForm } from "react-hook-form";
+import { Eye, EyeOff } from "lucide-react"; // icons
 import type { FieldValues, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -56,6 +58,7 @@ interface DynamicFormProps<Schema extends ZodTypeAny> {
   defaultValues?: Partial<z.infer<Schema>>;
   onSubmit: (values: z.infer<Schema>) => void;
   submitText?: string;
+  onChange?: (name: string, value: any) => void; // ADDED: New optional onChange prop
 }
 
 /**
@@ -71,6 +74,7 @@ export default function DynamicForm<Schema extends ZodTypeAny>({
   defaultValues,
   onSubmit,
   submitText = "Submit",
+  onChange, // ADDED: Destructure the new prop
 }: DynamicFormProps<Schema>) {
   // Infer form value type and ensure it extends FieldValues
   type Inferred = NormalizeZodInfer<z.infer<Schema>>;
@@ -83,6 +87,8 @@ export default function DynamicForm<Schema extends ZodTypeAny>({
 
   // Cast so that the ShadCN Form component (which expects UseFormReturn<FieldValues>) accepts it.
   const formForProvider = form as unknown as UseFormReturn<FieldValues, any>;
+  // State to manage password visibility
+  const [passwordVisible, setPasswordVisible] = useState<{ [key: string]: boolean }>({});
 
   return (
     <Form {...(formForProvider as UseFormReturn<any>)}>
@@ -103,6 +109,10 @@ export default function DynamicForm<Schema extends ZodTypeAny>({
                       <select
                         {...controller}
                         className="border rounded-md p-2 w-full dark:bg-gray-800"
+                        onChange={(e) => {
+                          controller.onChange(e); // Let react-hook-form handle the change
+                          onChange?.(field.name, e.target.value); // Call your custom onChange prop
+                        }}
                       >
                         <option value="">Select</option>
                         {field.options?.map((opt) => (
@@ -116,20 +126,62 @@ export default function DynamicForm<Schema extends ZodTypeAny>({
                         {...(controller as any)}
                         placeholder={field.placeholder}
                         className="border rounded-md p-2 w-full dark:bg-gray-800"
+                        onChange={(e) => {
+                          controller.onChange(e);
+                          onChange?.(field.name, e.target.value);
+                        }}
                       />
                     ) : field.type === "file" ? (
                       <input
                         {...(controller as any)}
                         type="file"
                         className="w-full"
+                        onChange={(e) => {
+                          controller.onChange(e);
+                          onChange?.(field.name, e.target.files?.[0]);
+                        }}
                       />
+                    ) : field.type === "password" ? (
+                      <div className="relative">
+                        <Input
+                          {...(controller as any)}
+                          type={passwordVisible[field.name] ? "text" : "password"}
+                          placeholder={field.placeholder}
+                          onChange={(e) => {
+                            controller.onChange(e);
+                            onChange?.(field.name, e.target.value);
+                          }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setPasswordVisible((prev) => ({
+                              ...prev,
+                              [field.name]: !prev[field.name],
+                            }))
+                          }
+                          className="cursor-pointer absolute right-3 top-2.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                          tabIndex={-1}
+                        >
+                          {passwordVisible[field.name] ? (
+                            <EyeOff className="w-4 h-4" />
+                          ) : (
+                            <Eye className="w-4 h-4" />
+                          )}
+                        </button>
+                      </div>
                     ) : (
                       <Input
                         {...(controller as any)}
                         type={field.type}
                         placeholder={field.placeholder}
+                        onChange={(e) => {
+                          controller.onChange(e);
+                          onChange?.(field.name, e.target.value);
+                        }}
                       />
-                    )}
+                    )
+                    }
                   </FormControl>
                   <FormMessage />
                 </FormItem>

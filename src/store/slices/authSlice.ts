@@ -1,6 +1,7 @@
+// src/store/slices/authSlice.ts
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { mockUsers } from "../../constants/mockUsers";
+import { mockUsers } from "../../constants";
 
 interface AuthState {
   isAuthenticated: boolean;
