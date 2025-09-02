@@ -3,10 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 import type { SidebarItem as SidebarItemType } from "./types";
-import { useDashboard } from "./context";
 
 export default function MobileSidebar({ items }: { items: SidebarItemType[] }) {
-  const { toggleSidebar } = useDashboard();
 
   return (
     <Sheet>
@@ -21,7 +19,7 @@ export default function MobileSidebar({ items }: { items: SidebarItemType[] }) {
             <SidebarItem
               key={item.label}
               item={item}
-              onItemClick={() => toggleSidebar()}
+               
             />
           ))}
         </div>

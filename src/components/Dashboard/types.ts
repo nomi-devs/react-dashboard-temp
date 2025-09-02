@@ -1,25 +1,25 @@
-// src/components/Dashboard/types.ts
 import type { LucideIcon } from "lucide-react";
 
 export interface SidebarChild {
   label: string;
   path: string;
 }
+
 export interface SidebarParent {
   label: string;
   icon: LucideIcon;
   children: SidebarChild[];
-  path?: undefined;
+  path?: string; // Optional path for the parent item
 }
 
 export interface SidebarLink {
   label: string;
   icon: LucideIcon;
   path: string;
-  children?: undefined;
 }
 
-export type SidebarItem = SidebarParent | SidebarLink; 
+export type SidebarItem = SidebarParent | SidebarLink;
+
 export interface DashboardLayoutProps {
   sidebarItems: SidebarItem[];
   topbarTitle?: string;

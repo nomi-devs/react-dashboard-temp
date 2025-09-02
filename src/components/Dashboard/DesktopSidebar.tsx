@@ -14,7 +14,7 @@ export default function DesktopSidebar({ items }: { items: SidebarItemType[] }) 
       )}
     >
       {items.map((item) => (
-        <SidebarItem key={item.label} item={item} isCollapsed={isSidebarCollapsed} />
+        <SidebarItem key={item.label} item={item}  />
       ))}
     </aside>
   );

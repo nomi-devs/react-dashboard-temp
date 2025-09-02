@@ -1,17 +1,14 @@
-// src/components/Dashboard/Sidebar.tsx
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import SidebarItem from "./SidebarItem";
 import type { SidebarItem as SidebarItemType } from "./types";
+import { useDashboard } from "./context";
+import { cn } from "@/lib/utils";
+import { Menu } from "lucide-react";
 
-export default function Sidebar({
-  items,
-  isMobile,
-}: {
-  items: SidebarItemType[];
-  isMobile?: boolean;
-}) {
-  if (isMobile) {
+export default function Sidebar({ items }: { items: SidebarItemType[] }) {
+  const { isSidebarCollapsed, isDesktop } = useDashboard();
+
+  if (!isMobile) {
     return (
       <Sheet>
         <SheetTrigger asChild>
@@ -25,7 +22,7 @@ export default function Sidebar({
               <SidebarItem
                 key={item.label}
                 item={item}
-                onItemClick={() => document.querySelector<HTMLButtonElement>('[data-radix-sheet-close]')?.click()}
+                // onItemClick={() => document.querySelector<HTMLButtonElement>('[data-radix-sheet-close]')?.click()}
               />
             ))}
           </div>
@@ -38,11 +35,37 @@ export default function Sidebar({
     );
   }
 
+  if (isDesktop) {
+    return (
+      <aside
+        className={cn(
+          "h-screen bg-card border-r p-4 overflow-y-auto fixed top-0 left-0 transition-all duration-300 z-20",
+          isSidebarCollapsed ? "w-20" : "w-64"
+        )}
+      >
+        <div className="flex items-center justify-center h-14 mb-4">
+          <h2 className={cn("text-xl font-bold", isSidebarCollapsed && "sr-only")}>
+            Dashboard
+          </h2>
+        </div>
+        <nav className="space-y-1">
+          {items.map((item) => (
+            <SidebarItem key={item.label} item={item} />
+          ))}
+        </nav>
+      </aside>
+    );
+  }
+
   return (
-    <aside className="w-64 bg-white dark:bg-gray-900 border-r h-screen p-4 overflow-y-auto">
-      {items.map((item) => (
-        <SidebarItem key={item.label} item={item} />
-      ))}
-    </aside>
+    <Sheet>
+      <SheetContent side="left" className="p-0 w-64 pt-14">
+        <nav className="space-y-1 p-4">
+          {items.map((item) => (
+            <SidebarItem key={item.label} item={item} />
+          ))}
+        </nav>
+      </SheetContent>
+    </Sheet>
   );
 }
