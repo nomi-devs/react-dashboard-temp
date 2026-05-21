@@ -35,6 +35,7 @@ export default tseslint.config([
     },
     rules: {
       // ── Code quality ──────────────────────────────────────────────────────────
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
       curly: "error",
       eqeqeq: "off",
       "lines-between-class-members": ["error", "always"],

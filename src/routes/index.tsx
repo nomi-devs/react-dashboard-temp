@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import { routes } from "./config";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
+
 import NotFoundPage from "@/pages/NotFoundPage";
 
 const AppRoutes = () => {

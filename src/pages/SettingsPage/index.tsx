@@ -1,16 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
-
-import type { RootState } from "@/store";
-
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Globe, Bell, ShieldCheck, Paintbrush, Save, ChevronDown } from "lucide-react";
-
 import type { RefObject, ReactElement } from "react";
 
+import type { RootState } from "@/store";
 import { DashboardLayout } from "@/components/Dashboard";
 import { sidebarItems } from "@/constants";
 import { toast } from "@/components/ui/Toast";
@@ -277,6 +274,7 @@ function SecuritySettings({
   onSuccess: () => void;
 }) {
   const userEmail = useSelector((state: RootState) => state.auth.user?.email ?? "");
+
   const {
     register,
     handleSubmit,

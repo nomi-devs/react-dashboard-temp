@@ -1,7 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-
 import { X, AlertCircle, CheckCircle2, AlertTriangle, Info } from "lucide-react";
-
 import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
@@ -61,6 +59,7 @@ function make(type: ToastType) {
     emit({ id: uid(), type, message, closeable: true, duration: 4000, ...opts });
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const toast = {
   error: make("error"),
   success: make("success"),

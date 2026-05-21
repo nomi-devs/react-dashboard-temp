@@ -22,8 +22,8 @@ const forgotPasswordFields: FieldConfig[] = [
 ];
 
 export default function ForgotPasswordPage() {
-  function onSubmit(values: z.infer<typeof forgotPasswordSchema>) {
-    console.log("Forgot password request:", values);
+  function onSubmit(_values: z.infer<typeof forgotPasswordSchema>) {
+    console.log("Forgot password request:", _values);
     // TODO: Trigger password reset API
   }
 

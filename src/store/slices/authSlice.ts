@@ -45,10 +45,13 @@ const authSlice = createSlice({
       state.user = null;
       state.error = null;
     },
-    register(_state, action: PayloadAction<{ email: string; name: string; password: string }>) {
+    register(
+      _state: AuthState,
+      _action: PayloadAction<{ email: string; name: string; password: string }>
+    ) {
       // Registration logic can be added here
       // For now, we will just log the registration attempt
-      console.log("Register action dispatched", action);
+      console.log("Register action dispatched", _action);
       // You can also handle user creation and state updates here if needed
     },
   },

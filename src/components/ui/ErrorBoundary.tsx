@@ -1,7 +1,5 @@
 import { Component } from "react";
-
 import { AlertTriangle, RefreshCw, Home } from "lucide-react";
-
 import type { ReactNode, ErrorInfo } from "react";
 
 interface Props {
