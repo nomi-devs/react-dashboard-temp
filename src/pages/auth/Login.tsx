@@ -17,8 +17,22 @@ const loginSchema = z.object({
 });
 
 const loginFields: FieldConfig[] = [
-  { name: "email", label: "Email", type: "email", placeholder: "you@example.com", autocomplete: "email", col: 12 },
-  { name: "password", label: "Password", type: "password", placeholder: "••••••••", autocomplete: "current-password", col: 12 },
+  {
+    name: "email",
+    label: "Email",
+    type: "email",
+    placeholder: "you@example.com",
+    autocomplete: "email",
+    col: 12,
+  },
+  {
+    name: "password",
+    label: "Password",
+    type: "password",
+    placeholder: "••••••••",
+    autocomplete: "current-password",
+    col: 12,
+  },
 ];
 
 export default function LoginPage() {

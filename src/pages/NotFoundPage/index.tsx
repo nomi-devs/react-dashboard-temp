@@ -5,9 +5,7 @@ export default function NotFoundPage() {
     <div className="min-h-screen flex items-center justify-center bg-background px-6">
       <div className="flex flex-col items-center text-center gap-6 max-w-md">
         {/* Big 404 */}
-        <p className="text-[8rem] font-black leading-none text-foreground/10 select-none">
-          404
-        </p>
+        <p className="text-[8rem] font-black leading-none text-foreground/10 select-none">404</p>
 
         <div className="flex flex-col gap-2 -mt-4">
           <h1 className="text-2xl font-bold">Page not found</h1>

@@ -23,9 +23,30 @@ const registerSchema = z
   });
 
 const registerFields: FieldConfig[] = [
-  { name: "name", label: "Name", type: "text", placeholder: "John Doe", autocomplete: "name", col: 12 },
-  { name: "email", label: "Email", type: "email", placeholder: "you@example.com", autocomplete: "email", col: 12 },
-  { name: "password", label: "Password", type: "password", placeholder: "••••••••", autocomplete: "new-password", col: 12 },
+  {
+    name: "name",
+    label: "Name",
+    type: "text",
+    placeholder: "John Doe",
+    autocomplete: "name",
+    col: 12,
+  },
+  {
+    name: "email",
+    label: "Email",
+    type: "email",
+    placeholder: "you@example.com",
+    autocomplete: "email",
+    col: 12,
+  },
+  {
+    name: "password",
+    label: "Password",
+    type: "password",
+    placeholder: "••••••••",
+    autocomplete: "new-password",
+    col: 12,
+  },
   {
     name: "confirmPassword",
     label: "Confirm Password",

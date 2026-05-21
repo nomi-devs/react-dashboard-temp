@@ -11,7 +11,14 @@ const forgotPasswordSchema = z.object({
 });
 
 const forgotPasswordFields: FieldConfig[] = [
-  { name: "email", label: "Email", type: "email", placeholder: "you@example.com", autocomplete: "email", col: 12 },
+  {
+    name: "email",
+    label: "Email",
+    type: "email",
+    placeholder: "you@example.com",
+    autocomplete: "email",
+    col: 12,
+  },
 ];
 
 export default function ForgotPasswordPage() {

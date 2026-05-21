@@ -130,9 +130,7 @@ function ToastCard({ item, onClose }: { item: ToastItem; onClose: () => void }) 
       {icon}
 
       <div className="flex-1 min-w-0">
-        {item.title && (
-          <p className={cn("text-sm font-bold leading-snug", text)}>{item.title}</p>
-        )}
+        {item.title && <p className={cn("text-sm font-bold leading-snug", text)}>{item.title}</p>}
         <p className={cn("text-sm leading-snug font-medium", text)}>{item.message}</p>
       </div>
 
@@ -181,12 +179,7 @@ export function Toaster({ position = "top-right" }: ToasterProps) {
   }, [remove]);
 
   return (
-    <div
-      className={cn(
-        "fixed z-50 flex flex-col gap-2 pointer-events-none",
-        POSITION[position]
-      )}
-    >
+    <div className={cn("fixed z-50 flex flex-col gap-2 pointer-events-none", POSITION[position])}>
       {toasts.map((item) => (
         <div key={item.id} className="pointer-events-auto">
           <ToastCard item={item} onClose={() => remove(item.id)} />
