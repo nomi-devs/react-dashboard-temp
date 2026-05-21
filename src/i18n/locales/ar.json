@@ -1,0 +1,10 @@
+{
+  "sidebar": {
+    "overview": "نظرة عامة",
+    "userManagement": "إدارة المستخدمين",
+    "notifications": "الإشعارات",
+    "settings": "الإعدادات",
+    "send": "إرسال",
+    "inbox": "البريد الوارد"
+  }
+}

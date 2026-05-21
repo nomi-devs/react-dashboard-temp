@@ -1,4 +1,6 @@
 // src/components/form/DynamicForm.tsx
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// Zod generic inference cannot bridge to react-hook-form's FieldValues without `any` casts here.
 import { useState } from "react";
 import type { z } from "zod";
 import type { ZodTypeAny } from "zod";
@@ -17,7 +19,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
 import { cn } from "@/lib/utils";
 
 /**
@@ -42,6 +43,7 @@ export interface FieldConfig {
   label: string;
   type: FieldType;
   placeholder?: string;
+  autocomplete?: string;
   options?: { label: string; value: string }[]; // for select
   col?: 6 | 12; // layout width: 6 => half, 12 => full
 }
@@ -94,10 +96,7 @@ export default function DynamicForm<Schema extends ZodTypeAny>({
     <Form {...(formForProvider as UseFormReturn<any>)}>
       <form onSubmit={form.handleSubmit(onSubmit as any)} className="grid grid-cols-12 gap-4">
         {fields.map((field) => (
-          <div
-            key={field.name}
-            className={cn(field.col === 6 ? "col-span-6" : "col-span-12")}
-          >
+          <div key={field.name} className={cn(field.col === 6 ? "col-span-6" : "col-span-12")}>
             <FormField
               control={form.control as any}
               name={field.name as any}
@@ -147,6 +146,7 @@ export default function DynamicForm<Schema extends ZodTypeAny>({
                           {...(controller as any)}
                           type={passwordVisible[field.name] ? "text" : "password"}
                           placeholder={field.placeholder}
+                          autoComplete={field.autocomplete}
                           onChange={(e) => {
                             controller.onChange(e);
                             onChange?.(field.name, e.target.value);
@@ -175,13 +175,13 @@ export default function DynamicForm<Schema extends ZodTypeAny>({
                         {...(controller as any)}
                         type={field.type}
                         placeholder={field.placeholder}
+                        autoComplete={field.autocomplete}
                         onChange={(e) => {
                           controller.onChange(e);
                           onChange?.(field.name, e.target.value);
                         }}
                       />
-                    )
-                    }
+                    )}
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -1,0 +1,10 @@
+{
+  "sidebar": {
+    "overview": "Overview",
+    "userManagement": "User Management",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "send": "Send",
+    "inbox": "Inbox"
+  }
+}

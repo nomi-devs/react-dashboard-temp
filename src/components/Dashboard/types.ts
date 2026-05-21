@@ -2,18 +2,21 @@ import type { LucideIcon } from "lucide-react";
 
 export interface SidebarChild {
   label: string;
+  labelKey?: string;
   path: string;
 }
 
 export interface SidebarParent {
   label: string;
+  labelKey?: string;
   icon: LucideIcon;
   children: SidebarChild[];
-  path?: string; // Optional path for the parent item
+  path?: string;
 }
 
 export interface SidebarLink {
   label: string;
+  labelKey?: string;
   icon: LucideIcon;
   path: string;
 }

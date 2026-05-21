@@ -1,18 +1,19 @@
 import { z } from "zod";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+
 import type { AppDispatch } from "@/store";
 import { register } from "@/store/slices/authSlice";
 import TopBanner from "@/components/layout/TopBanner";
 import DynamicForm from "@/components/form/DynamicForm";
 import type { FieldConfig } from "@/components/form/DynamicForm";
-import { Link } from "react-router-dom";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 const registerSchema = z
   .object({
     name: z.string().min(2, "Name is too short"),
-    email: z.string().email("Invalid email"),
+    email: z.email("Invalid email"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     confirmPassword: z.string(),
   })
@@ -22,10 +23,17 @@ const registerSchema = z
   });
 
 const registerFields: FieldConfig[] = [
-  { name: "name", label: "Name", type: "text", placeholder: "John Doe", col: 12 },
-  { name: "email", label: "Email", type: "email", placeholder: "you@example.com", col: 12 },
-  { name: "password", label: "Password", type: "password", placeholder: "••••••••", col: 12 },
-  { name: "confirmPassword", label: "Confirm Password", type: "password", placeholder: "••••••••", col: 12 },
+  { name: "name", label: "Name", type: "text", placeholder: "John Doe", autocomplete: "name", col: 12 },
+  { name: "email", label: "Email", type: "email", placeholder: "you@example.com", autocomplete: "email", col: 12 },
+  { name: "password", label: "Password", type: "password", placeholder: "••••••••", autocomplete: "new-password", col: 12 },
+  {
+    name: "confirmPassword",
+    label: "Confirm Password",
+    type: "password",
+    placeholder: "••••••••",
+    autocomplete: "new-password",
+    col: 12,
+  },
 ];
 
 export default function RegisterPage() {
@@ -39,10 +47,18 @@ export default function RegisterPage() {
   }
 
   function getStrength(pw: string) {
-    if (!pw) return { label: "", color: "" };
-    if (pw.length < 6) return { label: "Weak", color: "bg-red-500" };
-    if (!/[A-Z]/.test(pw) || !/[0-9]/.test(pw) || !/[!@#$%^&*]/.test(pw))
+    if (!pw) {
+      return { label: "", color: "" };
+    }
+
+    if (pw.length < 6) {
+      return { label: "Weak", color: "bg-red-500" };
+    }
+
+    if (!/[A-Z]/.test(pw) || !/[0-9]/.test(pw) || !/[!@#$%^&*]/.test(pw)) {
       return { label: "Medium", color: "bg-yellow-500" };
+    }
+
     return { label: "Strong", color: "bg-green-500" };
   }
 
@@ -71,8 +87,13 @@ export default function RegisterPage() {
             submitText="Sign Up"
             // Track password values for live feedback
             onChange={(name, value) => {
-              if (name === "password") setPassword(value);
-              if (name === "confirmPassword") setConfirmPassword(value);
+              if (name === "password") {
+                setPassword(value);
+              }
+
+              if (name === "confirmPassword") {
+                setConfirmPassword(value);
+              }
             }}
           />
 
@@ -81,9 +102,7 @@ export default function RegisterPage() {
             {strength.label && (
               <div className="flex items-center gap-2">
                 <div className={cn("h-2 w-20 rounded", strength.color)} />
-                <span className="text-sm text-gray-600 dark:text-gray-300">
-                  {strength.label}
-                </span>
+                <span className="text-sm text-gray-600 dark:text-gray-300">{strength.label}</span>
               </div>
             )}
           </div>
@@ -97,10 +116,7 @@ export default function RegisterPage() {
 
           {/* Links Section */}
           <div className="mt-2 flex flex-col sm:flex-row sm:justify-between text-sm text-center sm:text-left">
-            <Link
-              to="/login"
-              className="text-blue-500 hover:underline dark:text-blue-400"
-            >
+            <Link to="/login" className="text-blue-500 hover:underline dark:text-blue-400">
               Back to Login
             </Link>
             <span className="mt-2 sm:mt-0">

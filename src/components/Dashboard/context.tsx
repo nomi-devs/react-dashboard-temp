@@ -1,7 +1,11 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
+export type SidebarState = "open" | "partial" | "collapsed";
+
+const CYCLE: SidebarState[] = ["open", "partial", "collapsed"];
+
 interface DashboardContextType {
-  isSidebarCollapsed: boolean;
+  sidebarState: SidebarState;
   isDesktop: boolean;
   toggleSidebar: () => void;
 }
@@ -9,7 +13,7 @@ interface DashboardContextType {
 const DashboardContext = createContext<DashboardContextType | undefined>(undefined);
 
 export function DashboardProvider({ children }: { children: React.ReactNode }) {
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [sidebarState, setSidebarState] = useState<SidebarState>("open");
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
 
   useEffect(() => {
@@ -17,24 +21,32 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
       setIsDesktop(window.innerWidth >= 1024);
     };
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const toggleSidebar = () => {
-    setIsSidebarCollapsed(!isSidebarCollapsed);
+    setSidebarState((prev) => {
+      const next = CYCLE[(CYCLE.indexOf(prev) + 1) % CYCLE.length];
+
+      return next;
+    });
   };
 
   return (
-    <DashboardContext.Provider value={{ isSidebarCollapsed, isDesktop, toggleSidebar }}>
+    <DashboardContext.Provider value={{ sidebarState, isDesktop, toggleSidebar }}>
       {children}
     </DashboardContext.Provider>
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useDashboard = () => {
   const context = useContext(DashboardContext);
+
   if (context === undefined) {
     throw new Error("useDashboard must be used within a DashboardProvider");
   }
+
   return context;
 };

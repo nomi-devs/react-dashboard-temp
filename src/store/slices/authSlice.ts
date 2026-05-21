@@ -1,6 +1,7 @@
 // src/store/slices/authSlice.ts
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+
 import { mockUsers } from "../../constants";
 
 interface AuthState {
@@ -19,14 +20,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login(
-      state,
-      action: PayloadAction<{ email: string; password: string }>
-    ) {
+    login(state, action: PayloadAction<{ email: string; password: string }>) {
       const foundUser = mockUsers.find(
-        (u) =>
-          u.email === action.payload.email &&
-          u.password === action.payload.password
+        (u) => u.email === action.payload.email && u.password === action.payload.password
       );
 
       if (foundUser) {
@@ -41,20 +37,22 @@ const authSlice = createSlice({
         state.error = "Invalid email or password";
       }
     },
+    clearError(state) {
+      state.error = null;
+    },
     logout(state) {
       state.isAuthenticated = false;
       state.user = null;
       state.error = null;
     },
-    register(state,
-      action: PayloadAction<{ email: string; name: string; password: string }>){
+    register(_state, action: PayloadAction<{ email: string; name: string; password: string }>) {
       // Registration logic can be added here
       // For now, we will just log the registration attempt
-      console.log("Register action dispatched",action);
+      console.log("Register action dispatched", action);
       // You can also handle user creation and state updates here if needed
-    }
+    },
   },
 });
 
-export const { login, logout, register } = authSlice.actions;
+export const { login, logout, register, clearError } = authSlice.actions;
 export default authSlice.reducer;
